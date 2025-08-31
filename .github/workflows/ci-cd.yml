@@ -1,4 +1,4 @@
-name: build and deploy to cloud
+name: CI/CD to Cloud
 
 on:
   push:
@@ -30,6 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r assetrix/requirements.txt
+          pip install pytest
       - name: Run tests
         run: |
           python -m pytest assetrix/unittest_app.py -v
