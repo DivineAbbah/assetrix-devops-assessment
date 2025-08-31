@@ -2,7 +2,7 @@ name: CI/CD to Cloud
 
 on:
   push:
-    branches: [ div ]
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       cloud_provider:
@@ -88,4 +88,4 @@ jobs:
         run: |
           cd infra/azure
           terraform init
-          terraform apply -auto-approve -var="dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}" -var="dockerhub_token=${{ secrets.DOCKERHUB_TOKEN }}" -var="docker_image=${{ env.IMAGE_NAME }}" -var="image_tag=${{ github.sha }}"
+          terraform apply -auto-approve -var="dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}" -var="dockerhub_token=${{ secrets.DOCKERHUB_TOKEN }}" -var="docker_image=${{ env.IMAGE_NAME }}" -var="image_tag=${{ github.sha }}" -var="ssh_public_key=${{ secrets.VM_SSH_PUBLIC_KEY }}"
