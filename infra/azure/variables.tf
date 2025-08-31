@@ -29,3 +29,8 @@ variable "image_tag" {
   description = "Tag of the Docker image to deploy"
   type        = string
 }
+
+variable "ssh_public_key" {
+  description = "SSH public key for Azure VM access"
+  type        = string
+}
