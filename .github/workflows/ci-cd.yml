@@ -2,7 +2,7 @@ name: CI/CD to Cloud
 
 on:
   push:
-    branches: [ div ]
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       cloud_provider:
