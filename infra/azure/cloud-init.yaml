@@ -1,11 +1,11 @@
 #cloud-config
 package_update: true
 packages:
-   - docker.io
-   - docker-compose
+  - docker.io
+  - docker-compose
 runcmd:
-   - systemctl enable docker
-   - systemctl start docker
-   - docker login -u ${dockerhub_username} -p ${dockerhub_token}
-   - docker pull ${docker_image}:${image_tag}
-   - docker run -d -p 80:80 --name assetrix-app ${docker_image}:${image_tag}
+  - systemctl enable docker
+  - systemctl start docker
+  - echo ${dockerhub_token} | docker login -u ${dockerhub_username} --password-stdin
+  - docker pull ${docker_image}:${image_tag}
+  - docker run -d -p 80:80 --name assetrix-app ${docker_image}:${image_tag}
