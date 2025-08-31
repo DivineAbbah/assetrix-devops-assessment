@@ -1,4 +1,4 @@
-name: CI/CD to Cloud
+name: build and deploy to cloud
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       cloud_provider:
         description: 'Deploy to AWS or Azure?'
         required: true
-        default: 'aws'
+        default: 'azure'
         type: choice
         options:
         - aws
@@ -16,7 +16,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/assertrix-app
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/assetrix-app
 
 jobs:
   test:
@@ -29,10 +29,10 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          pip install -r app/requirements.txt
+          pip install -r assetrix/requirements.txt
       - name: Run tests
         run: |
-          python -m pytest app/test_app.py -v
+          python -m pytest assetrix/unittest_app.py -v
 
   build-and-scan:
     needs: test
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Docker image
         run: |
-          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} ./app
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} ./assetrix
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -62,7 +62,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and Push Docker image
         run: |
-          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} ./app
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} ./assetrix
           docker push ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
   deploy:
