@@ -119,7 +119,3 @@ resource "azurerm_linux_virtual_machine" "assetrix_vm" {
   # Use Cloud-Init to install Docker and run the container
   custom_data = filebase64("${path.module}/cloud-init.yaml")
 }
-
-output "public_ip_address" {
-  value = azurerm_public_ip.assetrix_pip.ip_address
-}
