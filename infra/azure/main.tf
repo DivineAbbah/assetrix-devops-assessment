@@ -117,5 +117,9 @@ resource "azurerm_linux_virtual_machine" "assetrix_vm" {
   }
 
   # Use Cloud-Init to install Docker and run the container
-  custom_data = filebase64("${path.module}/cloud-init.yaml")
-}
+  custom_data = base64encode(templatefile("${path.module}/cloud-init.yaml", {
+  dockerhub_username = var.dockerhub_username
+  dockerhub_token    = var.dockerhub_token
+  docker_image       = var.docker_image
+  image_tag          = var.image_tag
+}))
