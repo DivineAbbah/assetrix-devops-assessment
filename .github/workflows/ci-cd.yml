@@ -33,7 +33,7 @@ jobs:
           pip install pytest
       - name: Run tests
         run: |
-          python -m pytest assetrix/unittest_app.py -v
+          python -m pytest assetrix/unitest_app.py -v
 
   build-and-scan:
     needs: test
